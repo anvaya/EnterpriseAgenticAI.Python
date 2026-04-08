@@ -1,0 +1,59 @@
+models:
+  - type: main
+    engine: openai
+    model: gpt-4o-mini        # Use cheap model for guardrails; save gpt-4o for the agent
+
+rails:
+  input:
+    flows:
+      # Disable heuristics (401 auth error) - use model-based only
+      # - jailbreak detection heuristics
+      - jailbreak detection model
+      - injection detection
+      - mask sensitive data on input
+
+  output:
+    flows:
+      - mask sensitive data on output
+      - injection detection
+
+  config:
+    # Injection detection configuration
+    injection_detection:
+      action: reject  # Options: reject, omit, sanitize
+      # Available YARA rules: sqli, template, code, xss
+      injections:
+        - sqli      # SQL injection detection
+        - xss       # Cross-site scripting detection
+        - code      # Code injection detection
+        # - template  # Template injection (comment out if not needed)
+    # NVIDIA NIM API Configuration for jailbreak detection
+    jailbreak_detection:
+      # Heuristics configuration
+      enabled: true
+      length_threshold: 1024
+      perplexity_threshold: 89.79
+
+      # NVIDIA NIM endpoint (from https://build.nvidia.com/nvidia/nemoguard-jailbreak-detect)
+      # Use nim_base_url for model-based detection (with authentication)
+      nim_base_url: "https://ai.api.nvidia.com/v1/security/nvidia/nemoguard-jailbreak-detect"
+      # Use "." as no-op path since URL is already complete
+      nim_server_endpoint: "."
+      api_key_env_var: NVIDIA_API_KEY
+
+  sensitive_data_detection:
+    input:
+      entities:
+        - PERSON
+        - EMAIL_ADDRESS
+        - PHONE_NUMBER
+        - CREDIT_CARD
+        - SSN
+        - AWS_ACCESS_KEY
+        - API_KEY
+    output:
+      entities:
+        - PERSON
+        - EMAIL_ADDRESS
+        - PHONE_NUMBER
+        - CREDIT_CARD

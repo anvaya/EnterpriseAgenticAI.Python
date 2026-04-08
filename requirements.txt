@@ -1,0 +1,47 @@
+# ================================================================
+# ENTERPRISE SUPERVISOR NODE — Python Dependencies
+# ================================================================
+#
+# Core LangGraph / LangChain
+# ────────────────────────────────────────────────────────────────
+langgraph>=0.2.0
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-openai>=0.2.0
+langgraph-supervisor>=0.0.1
+
+# Validation & Schema
+# ────────────────────────────────────────────────────────────────
+pydantic>=2.0.0
+
+# Observability & Monitoring
+# ────────────────────────────────────────────────────────────────
+langsmith>=0.1.0
+opentelemetry-sdk>=1.20.0
+opentelemetry-exporter-otlp>=1.20.0
+
+# Resilience & Retry
+# ────────────────────────────────────────────────────────────────
+tenacity>=8.2.0
+pybreaker>=1.2.0
+
+# Logging
+# ────────────────────────────────────────────────────────────────
+structlog>=24.0.0
+
+# Environment configuration
+# ────────────────────────────────────────────────────────────────
+python-dotenv>=1.0.0
+
+# Guardrails
+# ────────────────────────────────────────────────────────────────
+nemoguardrails>=0.7.0
+
+# YARA (required for NeMo injection detection)
+# ────────────────────────────────────────────────────────────────
+yara-python>=0.9.0
+
+# PyTorch (required for NeMo jailbreak detection heuristics)
+# CPU-only version for development. For GPU support, install from pytorch.org
+# ────────────────────────────────────────────────────────────────
+torch>=2.0.0

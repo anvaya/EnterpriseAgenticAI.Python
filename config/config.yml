@@ -1,0 +1,11 @@
+models:
+  type: main
+  engine: openai
+  model: gpt-5
+
+rails:
+  input:
+    flows:
+      - self check input
+    
+passthrough: true
